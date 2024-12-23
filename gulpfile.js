@@ -113,15 +113,15 @@ function bundle() {
 
 // 生产模式，打包成ES模块和Commonjs模块
 async function compile() {
-    
+
     const bundle = await rollup({
         input: 'src/main.esm.ts',
         plugins: [
             // nodeResolve(), // tells Rollup how to find date-fns in node_modules
             // commonjs(), // converts date-fns to ES modules
             typescript({
-                tsconfigOverride: { 
-                    compilerOptions : { module: "ESNext" } 
+                tsconfigOverride: {
+                    compilerOptions : { module: "ESNext" }
                 }
             }),
             // terser(), // minify, but only in production
@@ -170,12 +170,12 @@ function bundleUMD() {
     .pipe(source('luckyexcel.umd.js'))
     .pipe(buffer())
     // .pipe(sourcemaps.init({loadMaps: true})) //The production environment does not need source map file
-    // .pipe(uglify())
+    .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(dest("dist"));
-    
+
 }
-  
+
 
 // 清除dist目录
 function clean() {
